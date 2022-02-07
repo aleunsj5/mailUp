@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Arr;
 use App\Models\Photo;
 use Carbon\Carbon;
+use App\Exceptions\Handler;
 
 class PhotoController extends Controller
 {
