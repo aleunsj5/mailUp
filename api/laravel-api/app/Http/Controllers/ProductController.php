@@ -12,8 +12,7 @@ class ProductController extends Controller
     public function getAllProducts()
     {
         try{
-            $products = Products::all();
-            $status = 100;
+            $products = Products::paginate();
             if(count($products)>0){
                 return response($products,200);
             }else{
@@ -35,6 +34,24 @@ class ProductController extends Controller
             }
         }catch(Exception $e){
             return response($e,500);
+        }
+    }
+
+    public function searchProductForName(Request $request){
+        try {
+            $input = $request->all();
+            if(empty($input)){
+                throw new Exception('No data entered');
+            }
+
+            $product = Products::where('name','LIKE','%'.$input['name'].'%')->first();
+            if(empty($product)){
+                return response('Product not found',204);
+            }else{
+                return response($product,200);
+            }
+        } catch (Exception $e) {
+            return response($e->getMessage(),500);
         }
     }
 
